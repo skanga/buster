@@ -623,6 +623,10 @@ async function getCustomHTTPApiResult(
   formData.append('response_format', 'json');
   formData.append('language', 'en');
 
+  for (const pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+  
   const rsp = await fetch(
     customHTTPApiUrl,
     {
@@ -633,6 +637,7 @@ async function getCustomHTTPApiResult(
         'Authorization': `Bearer ${customHTTPApiKey}`,
         'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
         'Lang': language,
+        'Content-Type': 'multipart/form-data; boundary=' + formData.getBoundary() // Get the boundary
       },
       body: formData // Use FormData
     }
