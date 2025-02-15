@@ -293,7 +293,8 @@ async function addBackgroundRequestListener() {
               'speech.googleapis.com',
               'iam.cloud.ibm.com',
               'speech-to-text.watson.cloud.ibm.com',
-              'stt.speech.microsoft.com'
+              'stt.speech.microsoft.com',
+              'api.groq.com'
             ],
             initiatorDomains: [getExtensionDomain()],
             resourceTypes: ['websocket', 'xmlhttprequest']
@@ -317,6 +318,7 @@ async function addBackgroundRequestListener() {
         '*://*.speech-to-text.watson.cloud.ibm.com/*',
         'https://iam.cloud.ibm.com/*',
         'https://*.stt.speech.microsoft.com/*'
+        'https://api.groq.com/*',
       ];
 
       const extraInfo = ['blocking', 'requestHeaders'];
@@ -614,6 +616,13 @@ async function getCustomHTTPApiResult(
   customHTTPApiKey,
   audioContent
 ) {
+  const formData = new FormData();
+  formData.append('audio', new Blob([audioContent], {type: 'audio/wav'}), 'audio.wav'); // Give the blob a filename
+  formData.append('model', 'whisper-large-v3-turbo');
+  formData.append('temperature', '0'); // Temperature should be a string
+  formData.append('response_format', 'json');
+  formData.append('language', 'en');
+
   const rsp = await fetch(
     customHTTPApiUrl,
     {
@@ -625,7 +634,7 @@ async function getCustomHTTPApiResult(
         'Lang': language,
         'ApiKey': customHTTPApiKey
       },
-      body: new Blob([audioContent], {type: 'audio/wav'})
+      body: formData // Use FormData
     }
   );
 
