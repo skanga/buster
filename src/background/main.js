@@ -317,8 +317,8 @@ async function addBackgroundRequestListener() {
         'https://speech.googleapis.com/*',
         '*://*.speech-to-text.watson.cloud.ibm.com/*',
         'https://iam.cloud.ibm.com/*',
-        'https://*.stt.speech.microsoft.com/*'
-        'https://api.groq.com/*',
+        'https://*.stt.speech.microsoft.com/*',
+        'https://api.groq.com/*'
       ];
 
       const extraInfo = ['blocking', 'requestHeaders'];
