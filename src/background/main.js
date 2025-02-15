@@ -617,7 +617,7 @@ async function getCustomHTTPApiResult(
   audioContent
 ) {
   const formData = new FormData();
-  formData.append('audio', new Blob([audioContent], {type: 'audio/wav'}), 'audio.wav'); // Give the blob a filename
+  formData.append('file', new Blob([audioContent], {type: 'audio/wav'}), 'audio.wav'); // Give the blob a filename
   formData.append('model', 'whisper-large-v3-turbo');
   formData.append('temperature', '0'); // Temperature should be a string
   formData.append('response_format', 'json');
@@ -630,9 +630,9 @@ async function getCustomHTTPApiResult(
       mode: 'cors',
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${customHTTPApiKey}`
         'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
         'Lang': language,
-        'ApiKey': customHTTPApiKey
       },
       body: formData // Use FormData
     }
