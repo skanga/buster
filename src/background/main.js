@@ -630,7 +630,7 @@ async function getCustomHTTPApiResult(
       mode: 'cors',
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${customHTTPApiKey}`
+        'Authorization': `Bearer ${customHTTPApiKey}`,
         'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
         'Lang': language,
       },
